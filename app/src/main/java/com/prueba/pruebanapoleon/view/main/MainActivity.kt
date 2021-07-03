@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import co.com.ceiba.mobile.pruebadeingreso.db.Executor
 import com.prueba.pruebanapoleon.BR
 import com.prueba.pruebanapoleon.R
@@ -21,6 +22,7 @@ import com.prueba.pruebanapoleon.view.main.adapters.MainRecyclerViewAdapter
 import com.prueba.pruebanapoleon.view.main.interfaces.OnClickPost
 import com.prueba.pruebanapoleon.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.progress.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnClickPost {
@@ -80,14 +82,20 @@ class MainActivity : AppCompatActivity(), OnClickPost {
     }
 
     private fun setAdapterData(posts: ArrayList<Post>) {
-        var count = 0
-        val temporalPosts = ArrayList<Post>()
-        posts.forEach { _ ->
-            posts[count].isColor = count < 20
-            temporalPosts.add(posts[count])
-            count++
+        lifecycleScope.launch {
+            var count = 0
+            val temporalPosts = ArrayList<Post>()
+            val databasePosts = appDatabase?.postDao()?.getPosts() as ArrayList<Post>
+            posts.forEach { post ->
+                val databasePost = databasePosts.filter { it.id == post.id }
+                if (databasePost.isNotEmpty())
+                    posts[count].isFavorite = databasePost[0].isFavorite
+                posts[count].isColor = count < 20
+                temporalPosts.add(posts[count])
+                count++
+            }
+            recyclerViewAdapter.setPostsData(temporalPosts)
+            recyclerViewAdapter.notifyDataSetChanged()
         }
-        recyclerViewAdapter.setPostsData(temporalPosts)
-        recyclerViewAdapter.notifyDataSetChanged()
     }
 }
