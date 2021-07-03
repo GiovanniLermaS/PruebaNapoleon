@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 
+const val POST = "post"
 
 fun hasNetwork(context: Context): Boolean? {
     var isConnected: Boolean? = false

@@ -12,6 +12,7 @@ import com.prueba.pruebanapoleon.R
 import com.prueba.pruebanapoleon.application.MyApplication
 import com.prueba.pruebanapoleon.databinding.ActivityMainBinding
 import com.prueba.pruebanapoleon.db.model.Post
+import com.prueba.pruebanapoleon.utils.POST
 import com.prueba.pruebanapoleon.utils.ViewModelFactory
 import com.prueba.pruebanapoleon.view.detail.DetailActivity
 import com.prueba.pruebanapoleon.view.main.adapters.MainRecyclerViewAdapter
@@ -36,7 +37,9 @@ class MainActivity : AppCompatActivity(), OnClickPost {
     }
 
     override fun goDetailActivity(post: Post) {
-        startActivity(Intent(this, DetailActivity::class.java))
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(POST, post)
+        startActivity(intent)
     }
 
     private fun setDataBinding() {
@@ -56,7 +59,7 @@ class MainActivity : AppCompatActivity(), OnClickPost {
     private fun consumeServicePosts() {
         mainActivityViewModel?.getPostsV({ errorMessage ->
             pbMainActivity.visibility = View.GONE
-            errorMessage.let { Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT) }
+            errorMessage.let { Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show() }
         }, { posts ->
             setAdapterData(posts)
             pbMainActivity.visibility = View.GONE
