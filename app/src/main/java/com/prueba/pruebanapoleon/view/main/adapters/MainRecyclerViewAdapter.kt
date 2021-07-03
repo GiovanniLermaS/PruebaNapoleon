@@ -38,6 +38,7 @@ class MainRecyclerViewAdapter(private val onClickPost: OnClickPost) :
         fun bind(post: Post) {
             binding.postData = post
             binding.executePendingBindings()
+            binding.cvPost.setOnClickListener { onClickPost.goDetailActivity(post) }
         }
     }
 }

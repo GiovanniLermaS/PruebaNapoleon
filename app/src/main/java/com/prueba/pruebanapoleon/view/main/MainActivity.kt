@@ -1,5 +1,6 @@
 package com.prueba.pruebanapoleon.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.prueba.pruebanapoleon.application.MyApplication
 import com.prueba.pruebanapoleon.databinding.ActivityMainBinding
 import com.prueba.pruebanapoleon.db.model.Post
 import com.prueba.pruebanapoleon.utils.ViewModelFactory
+import com.prueba.pruebanapoleon.view.detail.DetailActivity
 import com.prueba.pruebanapoleon.view.main.adapters.MainRecyclerViewAdapter
 import com.prueba.pruebanapoleon.view.main.interfaces.OnClickPost
 import com.prueba.pruebanapoleon.viewmodel.MainActivityViewModel
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), OnClickPost {
     }
 
     override fun goDetailActivity(post: Post) {
-
+        startActivity(Intent(this, DetailActivity::class.java))
     }
 
     private fun setDataBinding() {
