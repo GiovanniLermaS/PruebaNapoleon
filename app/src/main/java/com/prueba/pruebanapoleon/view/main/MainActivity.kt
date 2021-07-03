@@ -70,8 +70,15 @@ class MainActivity : AppCompatActivity(), OnClickPost {
         return recyclerViewAdapter
     }
 
-    private fun setAdapterData(users: ArrayList<Post>) {
-        recyclerViewAdapter.setPostsData(users)
+    private fun setAdapterData(posts: ArrayList<Post>) {
+        var count = 0
+        val temporalPosts = ArrayList<Post>()
+        posts.forEach { _ ->
+            posts[count].isColor = count < 20
+            temporalPosts.add(posts[count])
+            count++
+        }
+        recyclerViewAdapter.setPostsData(temporalPosts)
         recyclerViewAdapter.notifyDataSetChanged()
     }
 }
