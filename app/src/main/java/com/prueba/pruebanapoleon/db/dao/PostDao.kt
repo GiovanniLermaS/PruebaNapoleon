@@ -18,5 +18,5 @@ interface PostDao {
     suspend fun deletePostById(id: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setPost(user: Post?): Long
+    fun setPost(post: Post?): Long
 }

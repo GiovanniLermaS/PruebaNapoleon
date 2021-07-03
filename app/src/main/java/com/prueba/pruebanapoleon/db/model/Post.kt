@@ -15,5 +15,6 @@ data class Post(
         var title: String,
         @SerializedName("body")
         var body: String,
-        var isColor: Boolean
+        var isColor: Boolean,
+        var isFavorite: Boolean = false
 ) : Serializable

@@ -3,6 +3,7 @@ package com.prueba.pruebanapoleon.view.main.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.prueba.pruebanapoleon.R
 import com.prueba.pruebanapoleon.databinding.PostListItemBinding
 import com.prueba.pruebanapoleon.db.model.Post
 import com.prueba.pruebanapoleon.view.main.interfaces.OnClickPost
@@ -39,6 +40,11 @@ class MainRecyclerViewAdapter(private val onClickPost: OnClickPost) :
             binding.postData = post
             binding.executePendingBindings()
             binding.cvPost.setOnClickListener { onClickPost.goDetailActivity(post) }
+            binding.ivFavorite.setOnClickListener {
+                binding.ivFavorite.setImageResource(if (post.isFavorite) R.drawable.ic_favorite_empty else R.drawable.ic_favorite_full)
+                post.isFavorite = !post.isFavorite
+                onClickPost.addFavorites(post)
+            }
         }
     }
 }

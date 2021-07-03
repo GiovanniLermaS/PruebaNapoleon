@@ -11,5 +11,5 @@ import com.prueba.pruebanapoleon.db.model.Post
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun userDao(): PostDao
+    abstract fun postDao(): PostDao
 }

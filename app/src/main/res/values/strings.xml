@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PruebaNapoleon</string>
+    <string name="btn_add_favorites">Añadir favoritos</string>
 </resources>

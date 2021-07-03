@@ -7,10 +7,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import co.com.ceiba.mobile.pruebadeingreso.db.Executor
 import com.prueba.pruebanapoleon.BR
 import com.prueba.pruebanapoleon.R
 import com.prueba.pruebanapoleon.application.MyApplication
 import com.prueba.pruebanapoleon.databinding.ActivityMainBinding
+import com.prueba.pruebanapoleon.db.AppDatabase
 import com.prueba.pruebanapoleon.db.model.Post
 import com.prueba.pruebanapoleon.utils.POST
 import com.prueba.pruebanapoleon.utils.ViewModelFactory
@@ -23,6 +25,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnClickPost {
 
+    var appDatabase: AppDatabase? = null
+        @Inject set
     var viewModelFactory: ViewModelFactory? = null
         @Inject set
     var mainActivityViewModel: MainActivityViewModel? = null
@@ -40,6 +44,11 @@ class MainActivity : AppCompatActivity(), OnClickPost {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(POST, post)
         startActivity(intent)
+    }
+
+    override fun addFavorites(post: Post) {
+        Executor.iOThread { appDatabase?.postDao()?.setPost(post) }
+        getAdapter().notifyDataSetChanged()
     }
 
     private fun setDataBinding() {
