@@ -22,8 +22,8 @@ class MainActivityViewModel @Inject constructor(private val mainActivityReposito
                     e.message?.let { callbackError(it) }
                 }
 
-                override fun onSuccess(users: Response<ArrayList<Post>>) {
-                    callbackSuccess(users.body()!!)
+                override fun onSuccess(posts: Response<ArrayList<Post>>) {
+                    callbackSuccess(posts.body()!!)
                 }
             })
     }

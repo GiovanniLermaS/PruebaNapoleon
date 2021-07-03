@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity(), OnClickPost {
         mainActivityViewModel?.getPostsV({ errorMessage ->
             pbMainActivity.visibility = View.GONE
             errorMessage.let { Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT) }
-        }, { users ->
-            setAdapterData(users)
+        }, { posts ->
+            setAdapterData(posts)
             pbMainActivity.visibility = View.GONE
         })
     }
