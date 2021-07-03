@@ -1,5 +1,6 @@
 package com.prueba.pruebanapoleon.api
 
+import com.prueba.pruebanapoleon.db.model.Post
 import com.prueba.pruebanapoleon.di.rest.Endpoints.GET_POSTS
 import io.reactivex.Single
 import retrofit2.Response
