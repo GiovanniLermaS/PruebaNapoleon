@@ -27,9 +27,8 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setDataBinding()
         initViewModel()
-        consumeServiceUsers()
+        setDataBinding()
     }
 
     private fun setDataBinding() {
@@ -37,6 +36,7 @@ class DetailActivity : AppCompatActivity() {
             DataBindingUtil.setContentView<ActivityDetailBinding>(this, R.layout.activity_detail)
         activityDetailBinding.setVariable(BR.detailActivity, this)
         activityDetailBinding.executePendingBindings()
+        consumeServiceUsers(activityDetailBinding)
     }
 
     private fun initViewModel() {
@@ -46,12 +46,16 @@ class DetailActivity : AppCompatActivity() {
             ViewModelProviders.of(this, viewModelFactory).get(DetailActivityViewModel::class.java)
     }
 
-    private fun consumeServiceUsers() {
+    private fun consumeServiceUsers(activityDetailBinding: ActivityDetailBinding) {
         detailActivityViewModel?.getUsersV({ errorMessage ->
             pbMainActivity.visibility = View.GONE
             errorMessage.let { Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show() }
         }, { users ->
-            users[0]
+            val user = users.filter { it.id == post.userId }[0]
+            activityDetailBinding.name.text =
+                StringBuilder().append(user.name).append(" ").append(user.username)
+            activityDetailBinding.phone.text = user.phone
+            activityDetailBinding.email.text = user.email
         })
     }
 }
