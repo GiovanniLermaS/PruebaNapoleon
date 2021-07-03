@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.prueba.pruebanapoleon.BR
 import com.prueba.pruebanapoleon.R
 import com.prueba.pruebanapoleon.application.MyApplication
-import com.prueba.pruebanapoleon.databinding.ActivityMainBinding
+import com.prueba.pruebanapoleon.databinding.ActivityDetailBinding
 import com.prueba.pruebanapoleon.db.model.Post
 import com.prueba.pruebanapoleon.utils.POST
 import com.prueba.pruebanapoleon.utils.ViewModelFactory
@@ -33,10 +33,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDataBinding() {
-        val activityMainBinding =
-            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_detail)
-        activityMainBinding.setVariable(BR.detailActivity, this)
-        activityMainBinding.executePendingBindings()
+        val activityDetailBinding =
+            DataBindingUtil.setContentView<ActivityDetailBinding>(this, R.layout.activity_detail)
+        activityDetailBinding.setVariable(BR.detailActivity, this)
+        activityDetailBinding.executePendingBindings()
     }
 
     private fun initViewModel() {
@@ -51,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
             pbMainActivity.visibility = View.GONE
             errorMessage.let { Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show() }
         }, { users ->
-
+            users[0]
         })
     }
 }
