@@ -9,14 +9,14 @@ import com.prueba.pruebanapoleon.db.model.Post
 @Dao
 interface PostDao {
     @Query("SELECT * FROM Post WHERE id = :id")
-    suspend fun getPostById(id: Int): Post
+    suspend fun getPostFavoritesById(id: Int): Post
 
     @Query("SELECT * FROM Post")
-    suspend fun getPosts(): List<Post>
+    suspend fun getFavoritesPosts(): List<Post>
 
     @Query("DELETE FROM Post WHERE id=:id")
-    suspend fun deletePostById(id: Int)
+    suspend fun deleteFavoritePostById(id: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setPost(post: Post?): Long
+    fun setFavoritePost(post: Post?): Long
 }

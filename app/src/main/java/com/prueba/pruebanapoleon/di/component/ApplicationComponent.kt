@@ -9,6 +9,7 @@ import com.prueba.pruebanapoleon.di.module.ApplicationModule
 import com.prueba.pruebanapoleon.di.module.DatabaseModule
 import com.prueba.pruebanapoleon.di.module.RetrofitModule
 import com.prueba.pruebanapoleon.view.detail.DetailActivity
+import com.prueba.pruebanapoleon.view.favorites.FavoritesActivity
 import com.prueba.pruebanapoleon.view.main.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -19,6 +20,7 @@ interface ApplicationComponent {
     fun inject(myApplication: MyApplication?)
     fun inject(mainActivity: MainActivity?)
     fun inject(detailActivity: DetailActivity?)
+    fun inject(favoritesActivity: FavoritesActivity?)
 
     @get:ApplicationContext
     val context: Context?

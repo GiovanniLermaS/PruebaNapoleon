@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnClickPost {
     }
 
     override fun addFavorites(post: Post) {
-        Executor.iOThread { appDatabase?.postDao()?.setPost(post) }
+        Executor.iOThread { appDatabase?.postDao()?.setFavoritePost(post) }
         getAdapter().notifyDataSetChanged()
     }
 
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), OnClickPost {
         lifecycleScope.launch {
             var count = 0
             val temporalPosts = ArrayList<Post>()
-            val databasePosts = appDatabase?.postDao()?.getPosts() as ArrayList<Post>
+            val databasePosts = appDatabase?.postDao()?.getFavoritesPosts() as ArrayList<Post>
             posts.forEach { post ->
                 val databasePost = databasePosts.filter { it.id == post.id }
                 if (databasePost.isNotEmpty())
