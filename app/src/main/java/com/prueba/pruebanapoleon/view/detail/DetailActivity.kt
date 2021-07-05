@@ -27,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel()
+        injectClass()
         setDataBinding()
     }
 
@@ -39,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
         consumeServiceUsers(activityDetailBinding)
     }
 
-    private fun initViewModel() {
+    private fun injectClass() {
         (applicationContext as MyApplication).getComponent()?.inject(this)
 
         detailActivityViewModel =

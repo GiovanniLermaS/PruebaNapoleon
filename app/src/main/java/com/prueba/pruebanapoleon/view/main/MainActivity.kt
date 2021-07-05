@@ -2,6 +2,8 @@ package com.prueba.pruebanapoleon.view.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,12 +20,14 @@ import com.prueba.pruebanapoleon.db.model.Post
 import com.prueba.pruebanapoleon.utils.POST
 import com.prueba.pruebanapoleon.utils.ViewModelFactory
 import com.prueba.pruebanapoleon.view.detail.DetailActivity
+import com.prueba.pruebanapoleon.view.favorites.FavoritesActivity
 import com.prueba.pruebanapoleon.view.main.adapters.MainRecyclerViewAdapter
 import com.prueba.pruebanapoleon.view.main.interfaces.OnClickPost
 import com.prueba.pruebanapoleon.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), OnClickPost {
 
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity(), OnClickPost {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDataBinding()
-        initViewModel()
+        injectClass()
         consumeServicePosts()
     }
 
@@ -53,6 +57,20 @@ class MainActivity : AppCompatActivity(), OnClickPost {
         getAdapter().notifyDataSetChanged()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main_activity, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.iGoToFavorites) {
+            startActivity(Intent(this, FavoritesActivity::class.java))
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setDataBinding() {
         val activityMainBinding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
@@ -60,7 +78,7 @@ class MainActivity : AppCompatActivity(), OnClickPost {
         activityMainBinding.executePendingBindings()
     }
 
-    private fun initViewModel() {
+    private fun injectClass() {
         (applicationContext as MyApplication).getComponent()?.inject(this)
 
         mainActivityViewModel =
